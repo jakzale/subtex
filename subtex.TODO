@@ -1,0 +1,12 @@
+# This is a simple TODO list
+# Use together with the PlainTask Sublime Text Plugin
+
+Output:
+  ☐ Basic Output
+  ☐ Useful Output
+  ☐ Open Result in Skim
+
+---- ✄ -----------------------
+Additional Functionality:
+  ☐ Additional Skim Integration
+  ☐ Better Latex Support

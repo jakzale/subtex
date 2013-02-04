@@ -4,16 +4,28 @@
 		"selected_items":
 		[
 			[
+				"tex",
+				"tex_dir"
+			],
+			[
+				"run",
+				"run"
+			],
+			[
+				"outp",
+				"output_view"
+			],
+			[
+				"file",
+				"file_name"
+			],
+			[
 				"can",
 				"can_switch_to_pdf"
 			],
 			[
 				"enhanced_latex",
 				"enhanced_latex_outputCommand"
-			],
-			[
-				"run",
-				"run_command"
 			],
 			[
 				"out",
@@ -267,20 +279,68 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "/Users/jakub/Documents/Thesis/Chapters/technical_background.tex",
+			"settings":
+			{
+				"buffer_size": 35021,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "subtex.sublime-project",
+			"settings":
+			{
+				"buffer_size": 244,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "subtex_test.py",
+			"settings":
+			{
+				"buffer_size": 711,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "README.md",
+			"settings":
+			{
+				"buffer_size": 388,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "make_pdf.py",
+			"settings":
+			{
+				"buffer_size": 4451,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/jakub/Library/Application Support/Sublime Text 3/Packages/enhanced_latex/makePDF.py",
+			"settings":
+			{
+				"buffer_size": 11551,
+				"line_ending": "Unix"
+			}
+		}
 	],
-	"build_system": "",
+	"build_system": "Test - Package",
 	"command_palette":
 	{
-		"height": 49.0,
+		"height": 93.0,
 		"selected_items":
 		[
 			[
-				"swi",
-				"Switchr"
-			],
-			[
 				":w",
 				":w - Save"
+			],
+			[
+				"swi",
+				"Switchr"
 			],
 			[
 				":s",
@@ -479,13 +539,19 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 362.0
+		"width": 378.0
 	},
 	"console":
 	{
 		"height": 125.0,
 		"history":
 		[
+			"print(f, encoding=\"ascii\")",
+			"print(f)",
+			"f = v.file_name()",
+			"v.file_name()",
+			"v = w.active_view()",
+			"w = sublime.active_window()",
 			"w.run_command('example')",
 			"w.run_command('example', 'a')",
 			"w.run_command('example', w)",
@@ -505,10 +571,21 @@
 	},
 	"file_history":
 	[
-		"/Users/jakub/Library/Application Support/Sublime Text 3/Packages/subtex/.gitignore",
+		"/Users/jakub/Library/Application Support/Sublime Text 3/Packages/subtex/make_pdf.py",
+		"/Users/jakub/Library/Application Support/Sublime Text 3/Packages/subtex/subtex.sublime-project",
+		"/Users/jakub/Library/Application Support/Sublime Text 3/Packages/subtex/get_tex_root.py",
 		"/Users/jakub/Library/Application Support/Sublime Text 3/Packages/enhanced_latex/makePDF.py",
-		"/Users/jakub/Library/Application Support/Sublime Text 3/Packages/LaTeXTools/DDEExecute.py",
+		"/Users/jakub/Library/Application Support/Sublime Text 3/Packages/enhanced_latex/get_tex_root.py",
+		"/Users/jakub/Library/Application Support/Sublime Text 3/Packages/subtex/subtex.sublime-build",
+		"/Users/jakub/Library/Application Support/Sublime Text 3/Packages/enhanced_latex/LaTeX.sublime-build",
+		"/Users/jakub/Documents/Thesis/Chapters/final.tex",
 		"/Users/jakub/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/jakub/Library/Application Support/Sublime Text 3/Packages/enhanced_latex/LaTeX.tmLanguage",
+		"/Users/jakub/Library/Application Support/Sublime Text 3/Packages/enhanced_latex/LaTeXTools Preferences.sublime-settings",
+		"/Users/jakub/Library/Application Support/Sublime Text 3/Packages/enhanced_latex/LaTeX.sublime-commands",
+		"/Users/jakub/Library/Application Support/Sublime Text 3/Packages/subtex/README.md",
+		"/Users/jakub/Library/Application Support/Sublime Text 3/Packages/subtex/.gitignore",
+		"/Users/jakub/Library/Application Support/Sublime Text 3/Packages/LaTeXTools/DDEExecute.py",
 		"/Users/jakub/Documents/Thesis/Chapters/project_execution.tex",
 		"/Users/jakub/Documents/Thesis/Chapters/technical_background.tex",
 		"/Users/jakub/Documents/Thesis/Chapters/md/technical_background.md",
@@ -534,7 +611,6 @@
 		"/Users/jakub/Documents/Thesis/Chapters/md/ref_frame.tex",
 		"/Users/jakub/Documents/Thesis/Chapters/md/ref_frame.md",
 		"/Users/jakub/Documents/Thesis/Chapters/conclusion.tex",
-		"/Users/jakub/Documents/Thesis/Chapters/final.tex",
 		"/Users/jakub/Documents/Thesis/notebooks/schist/simple.py",
 		"/Users/jakub/Documents/Thesis/Chapters/md/kalman.md",
 		"/Users/jakub/Documents/Thesis/Chapters/md/motion.md",
@@ -624,6 +700,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Region",
 			"output_view",
 			"str",
 			"print",
@@ -750,8 +827,7 @@
 			".",
 			"top",
 			"200",
-			"dict",
-			"Dalton"
+			"dict"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -772,8 +848,184 @@
 	"groups":
 	[
 		{
+			"selected": 3,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "/Users/jakub/Documents/Thesis/Chapters/technical_background.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 35021,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5262,
+								5262
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "subtex.sublime-project",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 244,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								241,
+								241
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "subtex_test.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 711,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								494,
+								494
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "README.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 388,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								247,
+								247
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "make_pdf.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4451,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3371,
+								3371
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1146.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 5,
+					"file": "/Users/jakub/Library/Application Support/Sublime Text 3/Packages/enhanced_latex/makePDF.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11551,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2047,
+								2203
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 1.0,
+						"translation.y": 3791.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -794,11 +1046,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -812,6 +1071,14 @@
 	{
 		"height": 100.0
 	},
+	"output.subtex_exec":
+	{
+		"height": 0.0
+	},
+	"output.subtexexec":
+	{
+		"height": 102.0
+	},
 	"project": "/Users/jakub/Library/Application Support/Sublime Text 3/Packages/subtex/subtex.sublime-project",
 	"replace":
 	{
@@ -823,6 +1090,18 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"make",
+				"make_pdf.py"
+			],
+			[
+				"r",
+				"README.md"
+			],
+			[
+				"get",
+				"get_tex_root.py"
+			],
 			[
 				"final.tex",
 				"Chapters/final.tex"

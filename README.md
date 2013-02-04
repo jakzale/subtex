@@ -8,11 +8,6 @@ LaTex plug-in for Sublime Text 3
 
 REMEMBER That it is necessary to reload each piece of the plugin when modified!
 
-TODO List
----------
-* Add meaningful output
-* Add additional functionality
-
 CHANGE List
 -----------
 * Add a simple build script
