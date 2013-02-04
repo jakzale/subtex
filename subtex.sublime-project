@@ -5,5 +5,12 @@
 		{
 			"path": "/Users/jakub/Library/Application Support/Sublime Text 3/Packages/subtex"
 		}
-	]
+	],
+    "build_systems":
+    [
+        {
+            "name": "Test - Package",
+            "target": "subtex_test"
+        }
+    ]
 }

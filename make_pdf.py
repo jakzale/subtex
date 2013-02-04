@@ -1,9 +1,21 @@
 import sublime, sublime_plugin
 import os.path
+import threading
 from subtex.get_tex_root import get_tex_root
 # This is my own sublime text latex plugin
 # I am not sure if it will work properly,
 # Still, I need at least some kind of build script
+
+class CmdThread(threading.Thread):
+    def __init__(self, caller):
+        super().__init__()
+        self.caller = caller
+
+    def run(self, **kwargs):
+        # Verify how to pass arguments to the Thread
+        if "key" in kwargs:
+            print("Got [%s]" % kwargs["key"])
+
 
 class make_pdfCommand(sublime_plugin.WindowCommand):
     """Make PDF command that compiles the given latex file"""
