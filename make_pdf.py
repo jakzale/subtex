@@ -3,6 +3,7 @@ import os
 import threading
 import subprocess
 from subtex.get_tex_root import get_tex_root
+from subtex.parse_tex_log import parse_tex_log
 # This is my own sublime text latex plugin
 # I am not sure if it will work properly,
 # Still, I need at least some kind of build script
@@ -28,8 +29,10 @@ class make_pdfCommand(sublime_plugin.WindowCommand):
         # Handling process killing
         if self.proc:
             self.output("\n\n### Got request to terminate compilation ###")
-            self.proc.kill()
+            # Not sure if this is needed, but to avoid race conditions
+            proc = self.proc
             self.proc = None
+            proc.kill()
             return
 
         view = self.window.active_view()
@@ -51,7 +54,7 @@ class make_pdfCommand(sublime_plugin.WindowCommand):
             return
 
         # Check for the tex extension
-        tex_base, tex_ext = os.path.splitext(file_name)
+        _, tex_ext = os.path.splitext(file_name)
         tex_dir = os.path.dirname(file_name)
         
         if tex_ext.lower() != ".tex":
@@ -76,9 +79,13 @@ class make_pdfCommand(sublime_plugin.WindowCommand):
 
         # Need to change dir here
         threading.Thread(target=self.thread, kwargs=t_kwargs).start()
+        print("[make_pdf] Number of active threads: {}".format(threading.active_count()))
 
     # This is the thread code
     def thread(self, file_name=None, cmd=None, path=None, debug=False):
+        # Clearing the output panel
+        self.output_view.run_command("output_clear")
+
         if not file_name and not cmd:
             self.output("Error, wrong invocation")
             return
@@ -108,7 +115,7 @@ class make_pdfCommand(sublime_plugin.WindowCommand):
             self.output("Attempted command:")
             self.output(" ".join(t_cmd))
             proc = None
-            print(e)
+            print("[subtext_thread] Error: {}".format(e))
 
         # Ensuring that the path is recovered
         finally:
@@ -121,21 +128,105 @@ class make_pdfCommand(sublime_plugin.WindowCommand):
         if not proc:
             return
 
+        # Setting up the handle for the proc
+        self.proc = proc
 
+        # Waiting for the proc to finish
+        proc.wait()
 
+        # Cheching if the compilation have been cancelled
+        if not self.proc:
+            # The process have been cancelled
+            print("[subtex] Process Terminated by user.")
+            print("         process returned {}".format(proc.returncode))
+            self.output("\n[Compilation process terminated by user]")
+            self.finish()
+            return
+        else:
+            # Everything was done clearly, release the proc handle
+            self.proc = None
 
+        print("[subtex] Finished normally")
+        print("         process returned {}".format(proc.returncode))
+
+        # Processing the log
+        
+        tex_base, _ = os.path.splitext(file_name)
+        data = None
+        log_file = tex_base + ".log" 
+        with open(log_file, 'rb') as f:
+            data = f.read()
+
+        if not data:
+            print("[subtex] Error reading log file {}".format(log_file))
+            return
+
+        errors = []
+        warnings = []
+
+        try:
+            (errors, warnings) = parse_tex_log(data)
+            content = [""]
+            if errors:
+                content.append("There were errors in your LaTeX source") 
+                content.append("")
+                content.extend(errors)
+            else:
+                content.append("Texification succeeded: no errors!")
+                content.append("") 
+            if warnings:
+                if errors:
+                    content.append("")
+                    content.append("There were also warnings.") 
+                else:
+                    content.append("However, there were warnings in your LaTeX source") 
+                content.append("")
+                content.extend(warnings)
+
+        # Exception Handling
+        except Exception as e:
+            content=["",""]
+            content.append("LaTeXtools could not parse the TeX log file")
+            content.append("(actually, we never should have gotten here)")
+            content.append("")
+            content.append("Python exception: " + repr(e))
+            content.append("")
+            content.append("Please let me know on GitHub. Thanks!")
+
+        self.output("\n".join(content))
+        self.output("\n[Done!]")
+        self.finish(len(errors) == 0)
 
     def output(self, string):
         self.output_view.run_command("output_print", {"text":string + "\n"})
 
+    def finish(self, should_switch=False):
+        self.output_view.run_command("output_rewind")
+        if should_switch:
+            
+
 class output_printCommand(sublime_plugin.TextCommand):
     """A simple class to print inside output panel"""
-    def run(self, panel_edit, **args):
+    def run(self, panel_edit, text=None, position=False):
         panel = self.view
-        if "text" in args:
-            panel.insert(panel_edit, panel.size(), args["text"])
-            panel.show(panel.size())
+        if text:
+            panel.insert(panel_edit, panel.size(), text)
+            if position:
+                panel.show(panel.size())
         else:
             print("[output_print]: Missing keyword text")
+
+class output_rewindCommand(sublime_plugin.TextCommand):
+    """Simple command to show the top of the output window"""
+    def run(self, edit):
+        panel = self.view
+        panel.show(0)
+
+class output_clearCommand(sublime_plugin.TextCommand):
+    """Simple command to clear the view"""
+    def run(self, edit):
+        panel = self.view
+        all = sublime.Region(0, panel.size())
+        erase(edit, all)
 
 

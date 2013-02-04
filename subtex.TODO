@@ -2,8 +2,9 @@
 # Use together with the PlainTask Sublime Text Plugin
 
 Output:
-  ☐ Basic Output
+  ✔ Basic Output @done (13-02-04 17:29)
   ☐ Useful Output
+  ☐ Add function to reopen the output window
   ☐ Open Result in Skim
 
 ---- ✄ -----------------------

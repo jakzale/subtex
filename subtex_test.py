@@ -14,5 +14,5 @@ class subtex_testCommand(sublime_plugin.WindowCommand):
         "path": "$PATH:/usr/texbin:/usr/local/bin",
         "file_regex": "^(...*?):([0-9]+): ([0-9]*)([^\\.]+)",
         "file": "/Users/jakub/Documents/Thesis/Chapters/final.tex",
-        "debug": True
+        "debug": False
         })
