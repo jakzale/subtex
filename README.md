@@ -10,7 +10,12 @@ REMEMBER That it is necessary to reload each piece of the plugin when modified!
 
 TODO List
 ---------
+* Add meaningful output
+* Add additional functionality
 
-* Get a simple build up and running
-    * Together with a working Skim integration
-    * Ensure that everything is working file by using some test
+CHANGE List
+-----------
+* Add a simple build script
+* Add a simple output panel method
+* Add simple testing method
+* Add a basic framework

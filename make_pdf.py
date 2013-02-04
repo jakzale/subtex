@@ -1,20 +1,11 @@
 import sublime, sublime_plugin
-import os.path
+import os
 import threading
+import subprocess
 from subtex.get_tex_root import get_tex_root
 # This is my own sublime text latex plugin
 # I am not sure if it will work properly,
 # Still, I need at least some kind of build script
-
-class CmdThread(threading.Thread):
-    def __init__(self, caller):
-        super().__init__()
-        self.caller = caller
-
-    def run(self, **kwargs):
-        # Verify how to pass arguments to the Thread
-        if "key" in kwargs:
-            print("Got [%s]" % kwargs["key"])
 
 
 class make_pdfCommand(sublime_plugin.WindowCommand):
@@ -26,7 +17,7 @@ class make_pdfCommand(sublime_plugin.WindowCommand):
         self.output_view = None
 
     # Shouldn't it be easier
-    def run(self, cmd="", file_regex="", path=""):
+    def run(self, cmd="", file_regex="", path="", file=None, debug=False):
         """Run command
 
         The following attributes are passed by the build system
@@ -34,6 +25,13 @@ class make_pdfCommand(sublime_plugin.WindowCommand):
             * path - the additional path file
             * regex - the regex to capture the output
         """
+        # Handling process killing
+        if self.proc:
+            self.output("\n\n### Got request to terminate compilation ###")
+            self.proc.kill()
+            self.proc = None
+            return
+
         view = self.window.active_view()
         
         # Save if there are unchanged edits
@@ -42,7 +40,12 @@ class make_pdfCommand(sublime_plugin.WindowCommand):
             view.run_command('save')
 
         # Getting the proper file name
-        file_name = get_tex_root(view)
+        # Using file switch for testing only
+        if file:
+            file_name = file
+        else:
+            file_name = get_tex_root(view)
+
         if not os.path.isfile(file_name):
             sublime.error_message(file_name + ": file not found.")
             return
@@ -63,10 +66,67 @@ class make_pdfCommand(sublime_plugin.WindowCommand):
         
         # Showing the output
         self.window.run_command("show_panel", {"panel": "output.subtexexec"})
-        self.output("Hello, World!\n")
+        # A bit crazy
+        t_kwargs = {
+            "file_name": file_name,
+            "cmd": cmd + ["-outdir={}".format(tex_dir)],
+            "path": path,
+            "debug": debug
+        }
+
+        # Need to change dir here
+        threading.Thread(target=self.thread, kwargs=t_kwargs).start()
+
+    # This is the thread code
+    def thread(self, file_name=None, cmd=None, path=None, debug=False):
+        if not file_name and not cmd:
+            self.output("Error, wrong invocation")
+            return
+
+        if self.proc:
+            self.output("The proc handler is busy")
+            return
+
+        self.output("[Compiling {0}]".format(file_name))
+
+        # This is ugly and risky as eel, but need to stick to it
+        proc = None
+        try:
+            old_path = os.environ["PATH"]
+            if path:
+                os.environ["PATH"] = os.path.expandvars(path)
+            t_cmd = cmd + [file_name]
+
+            if debug:
+                self.output("[DEBUG] Changed PATH From {} to {}".format(old_path, os.environ["PATH"]))
+                self.output("[DEBUG] Executing command {}".format(t_cmd))
+            
+            proc = subprocess.Popen(t_cmd)
+
+        except Exception as e:
+            self.output("\n\nCOULD NOT COMPILE!\n\n")
+            self.output("Attempted command:")
+            self.output(" ".join(t_cmd))
+            proc = None
+            print(e)
+
+        # Ensuring that the path is recovered
+        finally:
+            if path:
+                os.environ["PATH"] = old_path
+                if debug:
+                    self.output("[DEBUG] Restored path to {}".format(os.environ["PATH"]))
+
+        # We can gracefully return here if it did not succeed
+        if not proc:
+            return
+
+
+
+
 
     def output(self, string):
-        self.output_view.run_command("output_print", {"text":string})
+        self.output_view.run_command("output_print", {"text":string + "\n"})
 
 class output_printCommand(sublime_plugin.TextCommand):
     """A simple class to print inside output panel"""
@@ -77,4 +137,5 @@ class output_printCommand(sublime_plugin.TextCommand):
             panel.show(panel.size())
         else:
             print("[output_print]: Missing keyword text")
+
 
