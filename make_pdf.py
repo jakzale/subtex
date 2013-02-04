@@ -203,7 +203,7 @@ class make_pdfCommand(sublime_plugin.WindowCommand):
     def finish(self, should_switch=False):
         self.output_view.run_command("output_rewind")
         if should_switch:
-            
+           self.window.active_view().run_command("jump_to_pdf") 
 
 class output_printCommand(sublime_plugin.TextCommand):
     """A simple class to print inside output panel"""
@@ -227,6 +227,6 @@ class output_clearCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         panel = self.view
         all = sublime.Region(0, panel.size())
-        erase(edit, all)
+        panel.erase(edit, all)
 
 
