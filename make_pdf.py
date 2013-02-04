@@ -107,7 +107,8 @@ class make_pdfCommand(sublime_plugin.WindowCommand):
             if debug:
                 self.output("[DEBUG] Changed PATH From {} to {}".format(old_path, os.environ["PATH"]))
                 self.output("[DEBUG] Executing command {}".format(t_cmd))
-            
+
+            print(" ".join(t_cmd))            
             proc = subprocess.Popen(t_cmd)
 
         except Exception as e:
