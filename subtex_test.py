@@ -9,7 +9,7 @@ class subtex_testCommand(sublime_plugin.WindowCommand):
         # unittest.main(module=__name__, argv=[file_name], exit=False)
         self.window.run_command("make_pdf", {
         "cmd": ["latexmk", "-cd",
-                "-e", "\"\\$pdflatex = 'pdflatex -shell-escape %O -interaction=nonstopmode -synctex=1 %S'\"",
+                "-e", "'$pdflatex = q/pdflatex -shell-escape %O -interaction=nonstopmode -synctex=1 %S/'",
                 "-f", "-pdf"],
         "path": "$PATH:/usr/texbin:/usr/local/bin",
         "file_regex": "^(...*?):([0-9]+): ([0-9]*)([^\\.]+)",

@@ -51,11 +51,15 @@ class jump_to_pdfCommand(sublime_plugin.TextCommand):
         # By default, we respect settings in Preferences
         
         # Clear it up a bit
-        options = ["-r","-g"] if keep_focus else ["-r"]     
+        options = ["-r","-g"] if keep_focus else ["-r"]
+        print(options)
         if forward_sync:
+            print(" ".join(["/Applications/Skim.app/Contents/SharedSupport/displayline"] + 
+                            options + [str(line), pdffile, srcfile]))
             subprocess.Popen(["/Applications/Skim.app/Contents/SharedSupport/displayline"] + 
                             options + [str(line), pdffile, srcfile])
         else:
             skim = os.path.join(sublime.packages_path(),
                             'subtex', 'skim', 'displayfile')
             subprocess.Popen(['sh', skim] + options + [pdffile])
+
