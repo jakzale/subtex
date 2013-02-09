@@ -11,7 +11,7 @@
         
         // Latex Command
         "cmd": ["latexmk", "-cd",
-                "-e", "'$pdflatex = q/pdflatex -shell-escape %O -interaction=nonstopmode -synctex=1 %S/'",
+                //"-e", "\\$pdflatex = q/pdflatex -shell-escape %O -interaction=nonstopmode -synctex=1 %S/",
                 //"-silent",
                 "-f", "-pdf"],
 

@@ -108,7 +108,10 @@ class make_pdfCommand(sublime_plugin.WindowCommand):
                 self.output("[DEBUG] Changed PATH From {} to {}".format(old_path, os.environ["PATH"]))
                 self.output("[DEBUG] Executing command {}".format(t_cmd))
 
-            print(" ".join(t_cmd))            
+            # A hack, but might work
+            j_cmd = " ".join(t_cmd)
+
+            print(j_cmd)
             proc = subprocess.Popen(t_cmd)
 
         except Exception as e:
@@ -134,6 +137,9 @@ class make_pdfCommand(sublime_plugin.WindowCommand):
 
         # Waiting for the proc to finish
         proc.wait()
+        # out, err = proc.communicate()
+        # print(out)
+        # print(err)
 
         # Cheching if the compilation have been cancelled
         if not self.proc:
